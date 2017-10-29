@@ -22,7 +22,9 @@ InsightDataScience~$ ./run.sh
 # Dependencies
 
 Importing all the required library to complete the challenge.
+
 Datatime to convert the date to miliseconds for storing chronologically by date
+
 heapq to maintain max heap and min heap inorder to calculate moving median
 
 import sys
