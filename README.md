@@ -1,25 +1,58 @@
 # Table of Contents
 1. [Introduction](README.md#introduction)
-2. [Challenge summary](README.md#challenge-summary)
+2. [Run Instruction](README.md#Run-Instruction)
+3. [Dependencies](README.md#Dependencies)
+4. [Approach](README.md#Approach)
+
 
 
 # Introduction
-You’re a data engineer working for political consultants and you’ve been asked to help identify possible donors for a variety of upcoming election campaigns. 
+Built a model that helps identify possible donors for a variety of upcoming election campaigns. 
 
-The Federal Election Commission regularly publishes campaign contributions and while you don’t want to pull specific donors from those files — because using that information for fundraising or commercial purposes is illegal — you want to identify the areas (zip codes) that may be fertile ground for soliciting future donations for similar candidates. 
+This model identifies which time periods are particularly lucrative so that an analyst might later correlate them to specific fundraising events.
 
-Because those donations may come from specific events (e.g., high-dollar fundraising dinners) but aren’t marked as such in the data, you also want to identify which time periods are particularly lucrative so that an analyst might later correlate them to specific fundraising events.
+# Run Instruction
+Update the run.sh file - 
 
-# Challenge summary
+InsightDataScience~$ ./run.sh
 
-For this challenge, we're asking you to take an input file that lists campaign contributions by individual donors and distill it into two output files:
 
-1. `medianvals_by_zip.txt`: contains a calculated running median, total dollar amount and total number of contributions by recipient and zip code
 
-2. `medianvals_by_date.txt`: has the calculated median, total dollar amount and total number of contributions by recipient and date.
 
-As part of the team working on the project, another developer has been placed in charge of building the graphical user interface, which consists of two dashboards. The first would show the zip codes that are particularly generous to a recipient over time while the second would display the days that were lucrative for each recipient. 
+# Dependencies
 
-Your role on the project is to work on the data pipeline that will hand off the information to the front-end. As the backend data engineer, you do **not** need to display the data or work on the dashboard but you do need to provide the information.
+# Importing all the required library to complete the challenge.
+# Datatime to convert the date to miliseconds for storing chronologically by date
+# heapq to maintain max heap and min heap inorder to calculate moving median
 
-You can assume there is another process that takes what is written to both files and sends it to the front-end. If we were building this pipeline in real life, we’d probably have another mechanism to send the output to the GUI rather than writing to a file. However for the purposes of grading this challenge, we just want you to write the output to files.
+import sys
+from datetime import datetime
+import time
+from heapq import *
+
+
+# Approach
+
+I keep two heaps (or priority queues):
+
+Max-heap small has the smaller half of the numbers. and Min-heap large has the larger half of the numbers.
+This gives me direct access to the one or two middle values (they're the tops of the heaps), so getting the median takes O(1) time. And dding a number takes O(log n) time.
+
+Supporting both min- and max-heap is more or less cumbersome in python , so I simply negate the numbers in the heap in which I want the reverse of the default order.
+
+If other id is not empty or cmte id is none or amount is none then that data line is invalid and skip it.
+Check if zip code is not none and length greater than 5 then only consider it.
+
+create a key of tuple cmte_id and zip code since pair of them should be unique.
+If the key is not present then, initialze the key with 5 items in the value.
+value = [list of min heap, list of max heap, current running median value, number of transaction, total amount]
+
+If key is present, then call the addnum function and retrive the new running median. Store it back in the zip code dictionary
+
+
+Check if the date is valid or not. if not valid skip it.
+Convert the given date into miliseconds for sorting chronologically by date
+
+Sort alphabetical by recipient and then chronologically by date
+Based on the sorting, store the output to date file by sorting alphabetical by recipient and then chronologically by date
+
