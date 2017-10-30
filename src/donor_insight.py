@@ -7,6 +7,7 @@ import sys
 from datetime import datetime
 import time
 from heapq import *
+import math
 
 # open the two output file in append mode.
 
@@ -82,14 +83,28 @@ with open(sys.argv[1], "r") as f:
                 max_heap = []
 
                 min_heap, max_heap = addNum(min_heap, max_heap, amt)
-                median = findMedian(min_heap, max_heap)
+                d1 = findMedian(min_heap, max_heap)
+                d2 = math.floor(d1)
 
-                zip_dict[(cmte_id, zip)] = [min_heap, max_heap, round(median), 1, amt]
+                if d1 - d2 >= 0.5:
+                    median = math.ceil(d1)
+                else:
+                    median = d2
+
+                zip_dict[(cmte_id, zip)] = [min_heap, max_heap, median, 1, amt]
 
             # if key is present, then call the addnum function and retrive the new running median. Store it back in the zip code dictionary
             else:
                 zip_dict[(cmte_id, zip)][0], zip_dict[(cmte_id, zip)][1] = addNum(zip_dict[(cmte_id, zip)][0], zip_dict[(cmte_id, zip)][1], amt)
-                zip_dict[(cmte_id, zip)][2] = round(findMedian(zip_dict[(cmte_id, zip)][0], zip_dict[(cmte_id, zip)][1]))
+
+                d1 = (findMedian(zip_dict[(cmte_id, zip)][0], zip_dict[(cmte_id, zip)][1]))
+                d2 = math.floor(d1)
+
+                if d1 - d2 >= 0.5:
+                    zip_dict[(cmte_id, zip)][2] = math.ceil(d1)
+                else:
+                    zip_dict[(cmte_id, zip)][2] = d2
+
                 zip_dict[(cmte_id, zip)][3] += 1
                 zip_dict[(cmte_id, zip)][4] += amt
 
@@ -114,11 +129,29 @@ with open(sys.argv[1], "r") as f:
                 min_heap, max_heap = addNum(min_heap, max_heap, amt)
                 median = findMedian(min_heap, max_heap)
 
-                date_dict[(cmte_id, date)] = [min_heap, max_heap, round(median), 1, amt]
+                d1 = findMedian(min_heap, max_heap)
+                d2 = math.floor(d1)
+
+                if d1 - d2 >= 0.5:
+                    median = math.ceil(d1)
+                else:
+                    median = d2
+
+                date_dict[(cmte_id, date)] = [min_heap, max_heap, median, 1, amt]
 
             else:
                 date_dict[(cmte_id, date)][0], date_dict[(cmte_id, date)][1] = addNum(date_dict[(cmte_id, date)][0], date_dict[(cmte_id, date)][1], amt)
-                date_dict[(cmte_id, date)][2] = round(findMedian(date_dict[(cmte_id, date)][0], date_dict[(cmte_id, date)][1]))
+
+                d1 = (findMedian(date_dict[(cmte_id, date)][0], date_dict[(cmte_id, date)][1]))
+                d2 = math.floor(d1)
+
+                if d1 - d2 >= 0.5:
+                    date_dict[(cmte_id, date)][2] = math.ceil(d1)
+                else:
+                    date_dict[(cmte_id, date)][2] = d2
+
+                #date_dict[(cmte_id, date)][2] = round(findMedian(date_dict[(cmte_id, date)][0], date_dict[(cmte_id, date)][1]))
+
                 date_dict[(cmte_id, date)][3] += 1
                 date_dict[(cmte_id, date)][4] += amt
 
