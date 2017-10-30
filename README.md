@@ -12,11 +12,11 @@ Built a model that helps identify possible donors for a variety of upcoming elec
 This model identifies which time periods are particularly lucrative so that an analyst might later correlate them to specific fundraising events.
 
 # Run Instruction
-Update the run.sh file - 
+Update the run.sh file - python [path/python file name] [input path] [output path]
 
-InsightDataScience~$ ./run.sh
+python ./src/donor_insight.py ./input/itcont.txt ./output/medianvals_by_zip.txt ./output/medianvals_by_date.txt
 
-
+InsightDataScience~$ bash run.sh
 
 
 # Dependencies
@@ -27,11 +27,15 @@ Datatime to convert the date to miliseconds for storing chronologically by date
 
 heapq to maintain max heap and min heap inorder to calculate moving median
 
+math library to round the median. 
+
 import sys
 
 from datetime import datetime
 
 import time
+
+import math
 
 from heapq import *
 
