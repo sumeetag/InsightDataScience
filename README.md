@@ -42,15 +42,20 @@ from heapq import *
 
 # Approach
 
+<h4>Finding running Median - </h4>
+
 I keep two heaps (or priority queues):
 
 Max-heap small has the smaller half of the numbers. and Min-heap large has the larger half of the numbers.
-This gives me direct access to the one or two middle values (they're the tops of the heaps), so getting the median takes O(1) time. And dding a number takes O(log n) time.
+This gives me direct access to the one or two middle values (they're the tops of the heaps), so getting the median takes O(1) time. And adding a number takes O(log n) time.
 
 Supporting both min- and max-heap is more or less cumbersome in python , so I simply negate the numbers in the heap in which I want the reverse of the default order.
 
+
+
 If other id is not empty or cmte id is none or amount is none then that data line is invalid and skip it.
 Check if zip code is not none and length greater than 5 then only consider it.
+
 
 create a key of tuple cmte_id and zip code since pair of them should be unique.
 If the key is not present then, initialze the key with 5 items in the value.
